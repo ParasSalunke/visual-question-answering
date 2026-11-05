@@ -62,11 +62,13 @@ export default function AskPage() {
   // Load templates
   useEffect(() => {
     apiTemplates()
-      .then((data: TemplateItem[]) => {
-        setTemplates(data);
-        const cats = Array.from(new Set(data.map((t) => t.category)));
-        setCategories(cats);
-        if (cats.length > 0) setSelectedCategory(cats[0]);
+      .then((data: any) => {
+        if (Array.isArray(data)) {
+          setTemplates(data);
+          const cats = Array.from(new Set(data.map((t: any) => t.category)));
+          setCategories(cats);
+          if (cats.length > 0) setSelectedCategory(cats[0]);
+        }
       })
       .catch((err) => console.error('Failed to load templates:', err));
   }, []);
@@ -415,7 +417,7 @@ export default function AskPage() {
 
             {/* Template Selector dropdown/chips */}
             <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto p-1.5 border border-slate-200 dark:border-slate-800 rounded-lg bg-slate-50/50 dark:bg-slate-900/30">
-              {templates
+              {(Array.isArray(templates) ? templates : [])
                 .filter((t) => t.category === selectedCategory)
                 .map((tmpl) => (
                   <button

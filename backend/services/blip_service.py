@@ -1,3 +1,4 @@
+from __future__ import annotations
 import os
 import time
 import math
@@ -157,7 +158,7 @@ class BlipService:
             }
 
     def _compute_teacher_forced_probs(
-        self, inputs: Dict[str, torch.Tensor], answers: List[str]
+        self, inputs: Dict[str, Any], answers: List[str]
     ) -> List[float]:
         """Compute relative probabilities via teacher-forced cross-entropy when beam scores are absent."""
         if not answers:

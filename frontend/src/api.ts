@@ -10,13 +10,25 @@ export function getImageUrl(path: string): string {
 }
 
 export async function apiHealth() {
-  const res = await fetch(`${API_BASE}/api/health`);
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/api/health`);
+    if (!res.ok) return { status: 'error', error: `HTTP ${res.status}` };
+    return await res.json();
+  } catch (err: any) {
+    return { status: 'offline', error: err?.message || 'Network error' };
+  }
 }
 
 export async function apiTemplates() {
-  const res = await fetch(`${API_BASE}/api/templates`);
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/api/templates`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (err) {
+    console.error('apiTemplates failed:', err);
+    return [];
+  }
 }
 
 export async function apiVqa(image: File, question: string, engine: string = 'blip') {
@@ -59,13 +71,26 @@ export async function apiGenerate(prompt: string, provider?: string) {
 }
 
 export async function apiPresets() {
-  const res = await fetch(`${API_BASE}/api/presets`);
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/api/presets`);
+    if (!res.ok) return {};
+    return await res.json();
+  } catch (err) {
+    console.error('apiPresets failed:', err);
+    return {};
+  }
 }
 
 export async function apiEvalPairs() {
-  const res = await fetch(`${API_BASE}/api/eval/pairs`);
-  return res.json();
+  try {
+    const res = await fetch(`${API_BASE}/api/eval/pairs`);
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (err) {
+    console.error('apiEvalPairs failed:', err);
+    return [];
+  }
 }
 
 export async function apiEvalRun(engine: string = 'blip', threshold: number = 0.8) {
