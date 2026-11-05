@@ -1,0 +1,260 @@
+[
+  {
+    "id": "pair_01",
+    "image": "eval/images/normal_01_red_car.jpg",
+    "question": "What color is the car?",
+    "ground_truth": "[STUDENT_GT: red]",
+    "acceptable_alternates": [
+      "red",
+      "dark red",
+      "crimson"
+    ],
+    "category": "normal",
+    "source": "generated"
+  },
+  {
+    "id": "pair_02",
+    "image": "eval/images/normal_02_three_cups.jpg",
+    "question": "How many cups are on the surface?",
+    "ground_truth": "[STUDENT_GT: 3]",
+    "acceptable_alternates": [
+      "3",
+      "three"
+    ],
+    "category": "normal",
+    "source": "generated"
+  },
+  {
+    "id": "pair_03",
+    "image": "eval/images/normal_03_red_apple.jpg",
+    "question": "What fruit is shown in the image?",
+    "ground_truth": "[STUDENT_GT: apple]",
+    "acceptable_alternates": [
+      "apple",
+      "red apple"
+    ],
+    "category": "normal",
+    "source": "generated"
+  },
+  {
+    "id": "pair_04",
+    "image": "eval/images/normal_04_stop_sign.jpg",
+    "question": "What kind of traffic sign is visible?",
+    "ground_truth": "[STUDENT_GT: stop sign]",
+    "acceptable_alternates": [
+      "stop sign",
+      "stop"
+    ],
+    "category": "normal",
+    "source": "generated"
+  },
+  {
+    "id": "pair_05",
+    "image": "eval/images/normal_05_blue_box.jpg",
+    "question": "What object is resting on the surface?",
+    "ground_truth": "[STUDENT_GT: box]",
+    "acceptable_alternates": [
+      "box",
+      "blue box",
+      "cube"
+    ],
+    "category": "normal",
+    "source": "generated"
+  },
+  {
+    "id": "pair_06",
+    "image": "eval/images/normal_06_lighting.jpg",
+    "question": "Is the scene well-lit?",
+    "ground_truth": "[STUDENT_GT: yes]",
+    "acceptable_alternates": [
+      "yes",
+      "well lit",
+      "bright"
+    ],
+    "category": "normal",
+    "source": "generated"
+  },
+  {
+    "id": "pair_07",
+    "image": "eval/images/normal_07_indoors.jpg",
+    "question": "Is this scene indoors or outdoors?",
+    "ground_truth": "[STUDENT_GT: indoors]",
+    "acceptable_alternates": [
+      "indoors",
+      "indoor",
+      "room"
+    ],
+    "category": "normal",
+    "source": "generated"
+  },
+  {
+    "id": "pair_08",
+    "image": "eval/images/normal_08_clear_path.jpg",
+    "question": "Is the area clear of large obstructions?",
+    "ground_truth": "[STUDENT_GT: yes]",
+    "acceptable_alternates": [
+      "yes",
+      "clear"
+    ],
+    "category": "normal",
+    "source": "generated"
+  },
+  {
+    "id": "pair_09",
+    "image": "eval/images/lowlight_01_dark_chair.jpg",
+    "question": "What furniture is placed in the dark room?",
+    "ground_truth": "[STUDENT_GT: chair]",
+    "acceptable_alternates": [
+      "chair",
+      "armchair",
+      "seat"
+    ],
+    "category": "low_light",
+    "source": "generated"
+  },
+  {
+    "id": "pair_10",
+    "image": "eval/images/lowlight_02_doorway.jpg",
+    "question": "Is there a doorway or exit visible?",
+    "ground_truth": "[STUDENT_GT: yes]",
+    "acceptable_alternates": [
+      "yes",
+      "door",
+      "doorway"
+    ],
+    "category": "low_light",
+    "source": "generated"
+  },
+  {
+    "id": "pair_11",
+    "image": "eval/images/lowlight_03_lighting_check.jpg",
+    "question": "What is the lighting condition of the scene?",
+    "ground_truth": "[STUDENT_GT: dark]",
+    "acceptable_alternates": [
+      "dark",
+      "dim",
+      "low light",
+      "night"
+    ],
+    "category": "low_light",
+    "source": "generated"
+  },
+  {
+    "id": "pair_12",
+    "image": "eval/images/lowlight_04_hazard.jpg",
+    "question": "Is the path ahead safe to walk quickly?",
+    "ground_truth": "[STUDENT_GT: no]",
+    "acceptable_alternates": [
+      "no",
+      "dark",
+      "unsafe"
+    ],
+    "category": "low_light",
+    "source": "generated"
+  },
+  {
+    "id": "pair_13",
+    "image": "eval/images/lowlight_05_color_fail.jpg",
+    "question": "What color is the chair?",
+    "ground_truth": "[STUDENT_GT: dark blue]",
+    "acceptable_alternates": [
+      "dark blue",
+      "black",
+      "dark",
+      "blue"
+    ],
+    "category": "low_light",
+    "source": "generated"
+  },
+  {
+    "id": "pair_14",
+    "image": "eval/images/lowlight_06_visibility.jpg",
+    "question": "Are details clearly distinguishable?",
+    "ground_truth": "[STUDENT_GT: no]",
+    "acceptable_alternates": [
+      "no",
+      "dim",
+      "hard to see"
+    ],
+    "category": "low_light",
+    "source": "generated"
+  },
+  {
+    "id": "pair_15",
+    "image": "eval/images/cluttered_01_desktop.jpg",
+    "question": "What color is the round mug on the desk?",
+    "ground_truth": "[STUDENT_GT: red]",
+    "acceptable_alternates": [
+      "red",
+      "pink",
+      "maroon"
+    ],
+    "category": "cluttered",
+    "source": "generated"
+  },
+  {
+    "id": "pair_16",
+    "image": "eval/images/cluttered_02_pen.jpg",
+    "question": "Is there a writing pen on the desk?",
+    "ground_truth": "[STUDENT_GT: yes]",
+    "acceptable_alternates": [
+      "yes",
+      "pen"
+    ],
+    "category": "cluttered",
+    "source": "generated"
+  },
+  {
+    "id": "pair_17",
+    "image": "eval/images/cluttered_03_notebook.jpg",
+    "question": "What object is to the left of the round mug?",
+    "ground_truth": "[STUDENT_GT: notebook]",
+    "acceptable_alternates": [
+      "notebook",
+      "book",
+      "pad"
+    ],
+    "category": "cluttered",
+    "source": "generated"
+  },
+  {
+    "id": "pair_18",
+    "image": "eval/images/cluttered_04_count.jpg",
+    "question": "Is the desk clean and organized?",
+    "ground_truth": "[STUDENT_GT: no]",
+    "acceptable_alternates": [
+      "no",
+      "cluttered",
+      "messy"
+    ],
+    "category": "cluttered",
+    "source": "generated"
+  },
+  {
+    "id": "pair_19",
+    "image": "eval/images/cluttered_05_cables.jpg",
+    "question": "Are there tangled cables visible on the surface?",
+    "ground_truth": "[STUDENT_GT: yes]",
+    "acceptable_alternates": [
+      "yes",
+      "wires",
+      "cables"
+    ],
+    "category": "cluttered",
+    "source": "generated"
+  },
+  {
+    "id": "pair_20",
+    "image": "eval/images/cluttered_06_dominant.jpg",
+    "question": "What kind of setting is this?",
+    "ground_truth": "[STUDENT_GT: desk]",
+    "acceptable_alternates": [
+      "desk",
+      "office",
+      "table",
+      "workspace"
+    ],
+    "category": "cluttered",
+    "source": "generated"
+  }
+]

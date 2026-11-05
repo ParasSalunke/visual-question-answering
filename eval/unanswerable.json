@@ -1,0 +1,62 @@
+[
+  {
+    "id": "unans_01",
+    "image": "eval/images/normal_01_red_car.jpg",
+    "question": "What kind of dog is sitting inside the car?",
+    "expected": "not visible"
+  },
+  {
+    "id": "unans_02",
+    "image": "eval/images/normal_02_three_cups.jpg",
+    "question": "What brand is printed on the coffee mug?",
+    "expected": "not visible"
+  },
+  {
+    "id": "unans_03",
+    "image": "eval/images/normal_03_red_apple.jpg",
+    "question": "How many worms are crawling on the apple?",
+    "expected": "none"
+  },
+  {
+    "id": "unans_04",
+    "image": "eval/images/normal_04_stop_sign.jpg",
+    "question": "What year is stamped on the street pole?",
+    "expected": "not visible"
+  },
+  {
+    "id": "unans_05",
+    "image": "eval/images/normal_05_blue_box.jpg",
+    "question": "What is hidden inside the blue box?",
+    "expected": "not visible"
+  },
+  {
+    "id": "unans_06",
+    "image": "eval/images/lowlight_01_dark_chair.jpg",
+    "question": "What is the title of the book on the chair?",
+    "expected": "not visible"
+  },
+  {
+    "id": "unans_07",
+    "image": "eval/images/lowlight_02_doorway.jpg",
+    "question": "Who is standing behind the dark door?",
+    "expected": "no one"
+  },
+  {
+    "id": "unans_08",
+    "image": "eval/images/cluttered_01_desktop.jpg",
+    "question": "What is the laptop password written on the sticky note?",
+    "expected": "not visible"
+  },
+  {
+    "id": "unans_09",
+    "image": "eval/images/cluttered_02_pen.jpg",
+    "question": "Is there a live parrot perched on the monitor?",
+    "expected": "no"
+  },
+  {
+    "id": "unans_10",
+    "image": "eval/images/cluttered_05_cables.jpg",
+    "question": "What brand of smartphone is connected to the cable?",
+    "expected": "not visible"
+  }
+]

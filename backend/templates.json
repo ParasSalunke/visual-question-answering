@@ -1,0 +1,158 @@
+[
+  {
+    "id": "exist_1",
+    "category": "existence",
+    "template": "Is there a {object} in this image?",
+    "defaults": { "object": "cat" }
+  },
+  {
+    "id": "exist_2",
+    "category": "existence",
+    "template": "Are there any {objects} visible here?",
+    "defaults": { "objects": "people" }
+  },
+  {
+    "id": "exist_3",
+    "category": "existence",
+    "template": "Does this scene contain a {object}?",
+    "defaults": { "object": "car" }
+  },
+  {
+    "id": "count_1",
+    "category": "counting",
+    "template": "How many {objects} are there?",
+    "defaults": { "objects": "chairs" }
+  },
+  {
+    "id": "count_2",
+    "category": "counting",
+    "template": "What is the count of {objects} visible?",
+    "defaults": { "objects": "cups" }
+  },
+  {
+    "id": "count_3",
+    "category": "counting",
+    "template": "How many people are in the {location}?",
+    "defaults": { "location": "room" }
+  },
+  {
+    "id": "colour_1",
+    "category": "colour",
+    "template": "What color is the {object}?",
+    "defaults": { "object": "car" }
+  },
+  {
+    "id": "colour_2",
+    "category": "colour",
+    "template": "Is the {object} {color}?",
+    "defaults": { "object": "shirt", "color": "blue" }
+  },
+  {
+    "id": "colour_3",
+    "category": "colour",
+    "template": "What is the dominant color of the {surface}?",
+    "defaults": { "surface": "wall" }
+  },
+  {
+    "id": "spatial_1",
+    "category": "spatial",
+    "template": "What is to the left of the {object}?",
+    "defaults": { "object": "table" }
+  },
+  {
+    "id": "spatial_2",
+    "category": "spatial",
+    "template": "What object is sitting on the {surface}?",
+    "defaults": { "surface": "desk" }
+  },
+  {
+    "id": "spatial_3",
+    "category": "spatial",
+    "template": "Is the {object_a} in front of or behind the {object_b}?",
+    "defaults": { "object_a": "lamp", "object_b": "sofa" }
+  },
+  {
+    "id": "activity_1",
+    "category": "activity",
+    "template": "What is the {subject} doing?",
+    "defaults": { "subject": "dog" }
+  },
+  {
+    "id": "activity_2",
+    "category": "activity",
+    "template": "Is anyone {action} in this scene?",
+    "defaults": { "action": "walking" }
+  },
+  {
+    "id": "activity_3",
+    "category": "activity",
+    "template": "What activity is taking place on the {place}?",
+    "defaults": { "place": "field" }
+  },
+  {
+    "id": "text_ocr_1",
+    "category": "text_ocr",
+    "template": "What text is written on the {object}?",
+    "defaults": { "object": "sign" }
+  },
+  {
+    "id": "text_ocr_2",
+    "category": "text_ocr",
+    "template": "Does the label say {expected_text}?",
+    "defaults": { "expected_text": "STOP" }
+  },
+  {
+    "id": "text_ocr_3",
+    "category": "text_ocr",
+    "template": "What number is shown on the {item}?",
+    "defaults": { "item": "clock" }
+  },
+  {
+    "id": "scene_lighting_1",
+    "category": "scene_lighting",
+    "template": "Is this scene indoors or outdoors?",
+    "defaults": {}
+  },
+  {
+    "id": "scene_lighting_2",
+    "category": "scene_lighting",
+    "template": "What is the lighting condition of the scene?",
+    "defaults": {}
+  },
+  {
+    "id": "scene_lighting_3",
+    "category": "scene_lighting",
+    "template": "What time of day does this appear to be?",
+    "defaults": {}
+  },
+  {
+    "id": "scene_lighting_4",
+    "category": "scene_lighting",
+    "template": "What type of room or environment is this?",
+    "defaults": {}
+  },
+  {
+    "id": "accessibility_1",
+    "category": "accessibility",
+    "template": "Is the path ahead clear of obstacles?",
+    "defaults": {}
+  },
+  {
+    "id": "accessibility_2",
+    "category": "accessibility",
+    "template": "Is there a step, curb, or tripping hazard in front?",
+    "defaults": {}
+  },
+  {
+    "id": "accessibility_3",
+    "category": "accessibility",
+    "template": "Is the room well-lit enough to see clearly?",
+    "defaults": {}
+  },
+  {
+    "id": "accessibility_4",
+    "category": "accessibility",
+    "template": "Is there a doorway or exit visible?",
+    "defaults": {}
+  }
+]
