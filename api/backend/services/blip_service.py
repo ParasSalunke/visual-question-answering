@@ -9,7 +9,7 @@ try:
     import torch
     from transformers import BlipProcessor, BlipForQuestionAnswering
     TORCH_AVAILABLE = True
-except ImportError:
+except (ImportError, Exception):
     torch = None
     BlipProcessor = None
     BlipForQuestionAnswering = None

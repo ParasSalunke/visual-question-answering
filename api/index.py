@@ -1,7 +1,9 @@
 import os
 import sys
+import traceback
 from pathlib import Path
 from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 CURRENT_DIR = Path(__file__).resolve().parent
@@ -30,16 +32,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Route middleware: ensures that requests reaching this service with or without the /api prefix resolve
+IMPORT_ERROR = None
+try:
+    from backend.main import app as backend_app
+    app.include_router(backend_app.router)
+except Exception as e:
+    IMPORT_ERROR = {
+        "error": str(e),
+        "type": type(e).__name__,
+        "traceback": traceback.format_exc(),
+        "sys_path": sys.path,
+        "current_dir": str(CURRENT_DIR),
+    }
+
+# Route middleware: ensures requests resolve whether prefixed with /api or stripped,
+# and returns informative JSON if an import error occurred instead of 500 Lambda crash
 @app.middleware("http")
-async def ensure_api_prefix(request: Request, call_next):
+async def request_router_middleware(request: Request, call_next):
+    if IMPORT_ERROR:
+        return JSONResponse(status_code=500, content=IMPORT_ERROR)
+
     path = request.scope.get("path", "")
     if path and not path.startswith("/api"):
         request.scope["path"] = "/api" + path
     return await call_next(request)
-
-# Import backend application
-from backend.main import app as backend_app
-
-# Include all backend routes safely into top-level app
-app.include_router(backend_app.router)

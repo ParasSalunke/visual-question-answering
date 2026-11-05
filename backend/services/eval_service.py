@@ -5,7 +5,10 @@ import time
 import logging
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple
-import numpy as np
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +62,10 @@ class EvalService:
             model = self.get_st_model()
             if model is not None:
                 embeddings = model.encode([text_a, text_b], normalize_embeddings=True)
-                cos_sim = float(np.dot(embeddings[0], embeddings[1]))
+                if np is not None:
+                    cos_sim = float(np.dot(embeddings[0], embeddings[1]))
+                else:
+                    cos_sim = float(sum(x * y for x, y in zip(embeddings[0], embeddings[1])))
                 return max(0.0, min(1.0, cos_sim))
         except Exception as e:
             logger.warning(f"Embedding similarity failed: {e}")
