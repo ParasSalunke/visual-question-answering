@@ -3,18 +3,6 @@
   "services": {
     "api": {
       "root": "api",
-      "framework": "fastapi",
-      "bindings": [
-        {
-          "type": "service",
-          "service": "app",
-          "format": "url",
-          "env": "BACKEND_SERVICE_URL"
-        }
-      ]
-    },
-    "app": {
-      "root": ".",
       "framework": "fastapi"
     },
     "frontend": {
