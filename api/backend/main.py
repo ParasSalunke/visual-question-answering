@@ -8,6 +8,7 @@ from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request, Res
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
+from fastapi.openapi.docs import get_swagger_ui_html, get_redoc_html
 from pydantic import BaseModel
 from PIL import Image
 from dotenv import load_dotenv
@@ -45,6 +46,28 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Documentation aliases for production and subpath deployments
+@app.get("/api/docs", include_in_schema=False)
+async def api_swagger_ui():
+    return get_swagger_ui_html(
+        openapi_url="/api/openapi.json",
+        title="Visual Question Answering App - Swagger UI",
+        swagger_js_url="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js",
+        swagger_css_url="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css",
+    )
+
+@app.get("/api/openapi.json", include_in_schema=False)
+async def api_openapi_schema():
+    return app.openapi()
+
+@app.get("/api/redoc", include_in_schema=False)
+async def api_redoc_ui():
+    return get_redoc_html(
+        openapi_url="/api/openapi.json",
+        title="Visual Question Answering App - ReDoc",
+        redoc_js_url="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js",
+    )
 
 # Pydantic Request Models
 class ExpandRequest(BaseModel):
