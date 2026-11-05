@@ -1,85 +1,62 @@
 import {
+  GraduationCap,
   Code2,
   ExternalLink,
 } from 'lucide-react';
 
 export default function LearnPage() {
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
-      {/* Editorial Header */}
-      <div className="space-y-2 border-b border-slate-200/80 dark:border-slate-800/80 pb-6">
-        <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="space-y-10 max-w-5xl mx-auto pb-16">
+      {/* Top Banner */}
+      <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 text-white p-6 sm:p-8 rounded-2xl shadow-md">
+        <div className="flex items-center gap-3">
+          <GraduationCap className="w-9 h-9 text-blue-200" />
           <div>
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
-              Syllabus Architecture &amp; Foundations
-            </h1>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              Theoretical foundations, cross-attention mechanics, scaled dot-product proofs, and multimodal pipeline lifecycle.
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Syllabus Architecture Map</h1>
+            <p className="mt-1 text-blue-100 text-sm sm:text-base">
+              Theoretical foundations, mathematical proofs, and architectural mapping across Layers I to IV.
             </p>
-          </div>
-          <div className="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400">
-            <span className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80">
-              Layers I – IV
-            </span>
-            <span className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80">
-              50-Mark Syllabus Map
-            </span>
           </div>
         </div>
       </div>
 
       {/* Layer I: Foundations */}
-      <section className="bg-white dark:bg-[#111827] border border-slate-200/80 dark:border-slate-800 rounded-xl p-6 shadow-xs space-y-6">
+      <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs space-y-6">
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
           <div className="flex items-center gap-2.5">
-            <span className="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-mono font-bold flex items-center justify-center text-xs">
+            <span className="w-7 h-7 rounded-lg bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-bold flex items-center justify-center text-xs">
               L1
             </span>
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white">
-              Layer I: Foundations &amp; Pipeline Lifecycle
-            </h2>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Layer I: Foundations &amp; Pipeline Lifecycle</h2>
           </div>
-          <a
-            href="#/ask"
-            className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-medium transition-colors"
-          >
-            <span>Ask Studio</span>
-            <ExternalLink className="w-3 h-3" />
+          <a href="#/ask" className="text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-medium">
+            Where in App: Ask Page <ExternalLink className="w-3 h-3" />
           </a>
         </div>
 
         {/* Lifecycle Diagram */}
-        <div className="space-y-3">
-          <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-              End-to-End Multimodal Lifecycle
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Coordinated interplay between discriminative encoder perception and generative autoregressive expansion:
-            </p>
-          </div>
+        <div>
+          <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
+            End-to-End VQA System Lifecycle &amp; Paradigm Attribution
+          </h3>
+          <p className="text-xs text-slate-500 mb-4">
+            Notice how our system orchestrates both discriminative (encoder/classification) and generative (autoregressive sequence) models:
+          </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 text-center text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-center text-xs">
             {[
-              { step: '1. Input', desc: 'RGB Image + Text Query', type: 'Modality Prep' },
-              { step: '2. Encoder', desc: 'ViT + Text Tokenizer', type: 'Discriminative', tag: 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300' },
-              { step: '3. Prompting', desc: 'Zero/Few-Shot Context', type: 'Prompt Eng.' },
-              { step: '4. Perception', desc: 'Beam Search Short Answer', type: 'BLIP-VQA (CPU)' },
-              { step: '5. Expansion', desc: 'Single-Sentence Synthesis', type: 'Gemini LLM', tag: 'bg-blue-100 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300' },
-              { step: '6. Evaluation', desc: 'Rule + MiniLM Cosine', type: 'Dual-Verdict', tag: 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300' },
-              { step: '7. Feedback', desc: 'Human-in-Loop Verdicts', type: 'Student Review' },
+              { step: '1. Data', desc: 'RGB Image + Question Text', type: 'Modality Prep' },
+              { step: '2. Model', desc: 'ViT + BERT Cross-Attention', type: 'Discriminative', tag: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' },
+              { step: '3. Prompt', desc: 'Zero/Few-Shot Templates', type: 'Prompt Eng.' },
+              { step: '4. Inference', desc: 'Beam Search Short Answer', type: 'BLIP (CPU)' },
+              { step: '5. Expansion', desc: 'Full Sentence Generation', type: 'Generative', tag: 'bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300' },
+              { step: '6. Evaluation', desc: 'Rule + MiniLM Cosine', type: 'Discriminative', tag: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' },
+              { step: '7. Feedback', desc: 'Manual Verdict Overrides', type: 'Human-in-Loop' },
             ].map((st, i) => (
-              <div
-                key={i}
-                className="p-3 rounded-lg border border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 flex flex-col justify-between"
-              >
-                <span className="font-semibold text-slate-900 dark:text-white">{st.step}</span>
-                <span className="text-[11px] text-slate-500 mt-1">{st.desc}</span>
-                <span
-                  className={`text-[9px] mt-2 py-0.5 px-1.5 rounded font-mono font-medium ${
-                    st.tag || 'bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
-                  }`}
-                >
+              <div key={i} className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/40 flex flex-col justify-between">
+                <span className="font-bold text-slate-800 dark:text-slate-200">{st.step}</span>
+                <span className="text-[10px] text-slate-500 mt-1">{st.desc}</span>
+                <span className={`text-[9px] mt-2 py-0.5 px-1 rounded font-semibold ${st.tag || 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`}>
                   {st.type}
                 </span>
               </div>
@@ -88,160 +65,195 @@ export default function LearnPage() {
         </div>
 
         {/* Prompt Comparison Table */}
-        <div className="pt-2 space-y-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="pt-2">
+          <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-2">
             Prompt Engineering Comparison: Zero-Shot vs Few-Shot (Measured)
           </h3>
-          <div className="overflow-x-auto border border-slate-200/80 dark:border-slate-800 rounded-lg">
-            <table className="w-full text-xs text-left">
-              <thead className="bg-slate-50 dark:bg-slate-900/60 font-semibold text-slate-500">
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs text-left border border-slate-200 dark:border-slate-800 rounded-lg">
+              <thead className="bg-slate-50 dark:bg-slate-800/60 uppercase font-semibold text-slate-500">
                 <tr>
                   <th className="p-2.5">Technique</th>
                   <th className="p-2.5">Prompt Structure</th>
-                  <th className="p-2.5">Fidelity Gate</th>
+                  <th className="p-2.5">Fidelity Gate %</th>
                   <th className="p-2.5">Mean Latency</th>
-                  <th className="p-2.5">Analytical Trade-Off</th>
+                  <th className="p-2.5">Academic Analysis</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 <tr>
-                  <td className="p-2.5 font-semibold text-slate-900 dark:text-white">Zero-Shot</td>
+                  <td className="p-2.5 font-bold">Zero-Shot</td>
                   <td className="p-2.5 font-mono text-slate-500">Q: [q] \n A: [a] \n Full sentence:</td>
-                  <td className="p-2.5 text-emerald-600 dark:text-emerald-400 font-semibold">100.0%</td>
-                  <td className="p-2.5 font-mono">~350 ms</td>
-                  <td className="p-2.5 text-slate-500">Fastest response, but exhibits minor grammatical variation.</td>
+                  <td className="p-2.5 text-green-600 font-bold">100.0%</td>
+                  <td className="p-2.5">~350 ms</td>
+                  <td className="p-2.5 text-slate-500">Fastest, but occasional risk of syntactic brevity.</td>
                 </tr>
                 <tr>
-                  <td className="p-2.5 font-semibold text-slate-900 dark:text-white">Few-Shot (5+ Examples)</td>
-                  <td className="p-2.5 font-mono text-slate-500">5 in-context demonstrator exemplars</td>
-                  <td className="p-2.5 text-emerald-600 dark:text-emerald-400 font-semibold">100.0%</td>
-                  <td className="p-2.5 font-mono">~480 ms</td>
-                  <td className="p-2.5 text-slate-500">Higher syntactic consistency and strict non-hallucinatory fidelity.</td>
+                  <td className="p-2.5 font-bold">Few-Shot (5+ Examples)</td>
+                  <td className="p-2.5 font-mono text-slate-500">5 curated input-output demonstrations</td>
+                  <td className="p-2.5 text-green-600 font-bold">100.0%</td>
+                  <td className="p-2.5">~480 ms</td>
+                  <td className="p-2.5 text-slate-500">Consistently adheres to exact passive/active style constraints.</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+
+        {/* Top-K Probability View */}
+        <div className="pt-2">
+          <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200 mb-1">
+            BLIP Sequence Confidence via Softmax Over Beam Candidates
+          </h3>
+          <p className="text-xs text-slate-500 mb-3">
+            In our PyTorch CPU backend, beam search outputs length-penalized sequence log-likelihoods. Applying softmax across the top-5 beams yields calibrated candidate probabilities:
+          </p>
+          <div className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2">
+            {[
+              { word: 'red (Top 1)', p: 0.4581, color: 'bg-blue-600' },
+              { word: 'black (Top 2)', p: 0.1586, color: 'bg-slate-500' },
+              { word: 'red and black (Top 3)', p: 0.1390, color: 'bg-slate-500' },
+              { word: 'red and white (Top 4)', p: 0.1236, color: 'bg-slate-500' },
+              { word: 'black and red (Top 5)', p: 0.1206, color: 'bg-slate-500' },
+            ].map((b, idx) => (
+              <div key={idx} className="flex items-center gap-3 text-xs">
+                <span className="w-36 font-mono font-medium text-slate-700 dark:text-slate-300">{b.word}</span>
+                <div className="flex-1 bg-slate-200 dark:bg-slate-700 rounded-full h-3 overflow-hidden">
+                  <div className={`h-full ${b.color}`} style={{ width: `${b.p * 100}%` }} />
+                </div>
+                <span className="w-16 font-mono text-right text-slate-600 dark:text-slate-400">
+                  {(b.p * 100).toFixed(1)}%
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
-      {/* Layer II: Attention Mechanics */}
-      <section className="bg-white dark:bg-[#111827] border border-slate-200/80 dark:border-slate-800 rounded-xl p-6 shadow-xs space-y-6">
+      {/* Layer II: Transformers, GANs & Attention */}
+      <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs space-y-6">
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
           <div className="flex items-center gap-2.5">
-            <span className="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-mono font-bold flex items-center justify-center text-xs">
+            <span className="w-7 h-7 rounded-lg bg-indigo-100 dark:bg-indigo-900/60 text-indigo-700 dark:text-indigo-300 font-bold flex items-center justify-center text-xs">
               L2
             </span>
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white">
-              Layer II: Attention Mechanics &amp; Transformer Architectures
-            </h2>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Layer II: Attention Mechanics &amp; Transformer Architecture</h2>
           </div>
-          <span className="text-xs font-mono text-slate-400">Core Viva Topic</span>
+          <span className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">Core Viva Subject</span>
         </div>
 
-        {/* Self vs Cross Attention */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-          <div className="p-4 bg-slate-50/70 dark:bg-slate-900/50 rounded-lg border border-slate-200/80 dark:border-slate-800 space-y-2">
-            <span className="font-semibold text-slate-900 dark:text-white block">1. Vision Transformer Self-Attention (Visual Tokens)</span>
-            <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
-              Images are divided into 16x16 pixel patches. Each patch projects into Query ($Q$), Key ($K$), and Value ($V$) representations, computing spatial relationships across image patches independently of text.
-            </p>
-            <div className="font-mono bg-white dark:bg-slate-900 p-2 rounded border border-slate-200/80 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400">
-              Q = Visual Patches, K = Visual Patches, V = Visual Patches
+        {/* Self vs Cross Attention Diagram */}
+        <div className="space-y-3">
+          <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+            Self-Attention vs Cross-Attention in Vision-Language Models
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2">
+              <span className="font-bold text-indigo-600 dark:text-indigo-400 block">1. ViT Self-Attention (Image Only)</span>
+              <p className="text-slate-500">
+                The image is divided into $16 \times 16$ pixel patches. Each patch projects to query ($Q$), key ($K$), and value ($V$) vectors.
+                Self-attention calculates pairwise spatial affinities across all image patches independently of the question.
+              </p>
+              <div className="font-mono bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-800 text-[11px]">
+                Q = Patches, K = Patches, V = Patches
+              </div>
             </div>
-          </div>
 
-          <div className="p-4 bg-slate-50/70 dark:bg-slate-900/50 rounded-lg border border-slate-200/80 dark:border-slate-800 space-y-2">
-            <span className="font-semibold text-slate-900 dark:text-white block">2. Multimodal Cross-Attention (Query-to-Vision)</span>
-            <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
-              In BLIP's multimodal text decoder, question tokens act as queries ($Q$), while patch vectors from the ViT encoder serve as keys ($K$) and values ($V$), conditioning generation on visual features.
-            </p>
-            <div className="font-mono bg-white dark:bg-slate-900 p-2 rounded border border-slate-200/80 dark:border-slate-800 text-[11px] text-slate-600 dark:text-slate-400">
-              Q = Question Tokens, K = Visual Patches, V = Visual Patches
+            <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-xl border border-slate-200 dark:border-slate-800 space-y-2">
+              <span className="font-bold text-purple-600 dark:text-purple-400 block">2. Multimodal Cross-Attention (Query-to-Vision)</span>
+              <p className="text-slate-500">
+                In BLIP's multimodal text decoder, question tokens act as queries ($Q$), while the visual patch representations from the ViT encoder serve as keys ($K$) and values ($V$).
+              </p>
+              <div className="font-mono bg-white dark:bg-slate-900 p-2 rounded border border-slate-200 dark:border-slate-800 text-[11px]">
+                Q = Question Tokens, K = Visual Patches, V = Visual Patches
+              </div>
             </div>
           </div>
         </div>
 
         {/* Worked Softmax Math Example */}
-        <div className="p-4 bg-slate-50/70 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-800 rounded-lg space-y-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-2">
-            <Code2 className="w-4 h-4 text-slate-500" />
-            <span>Worked Mathematical Example: Scaled Dot-Product Attention</span>
+        <div className="p-4 bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-200 dark:border-indigo-900/60 rounded-xl space-y-3">
+          <h3 className="text-sm font-bold text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
+            <Code2 className="w-4 h-4 text-indigo-600" /> Worked Numeric Example of Scaled Dot-Product Attention:
           </h3>
-          <p className="text-xs font-mono text-slate-600 dark:text-slate-400">
-            Attention(Q, K, V) = softmax( (Q · K^T) / √d_k ) · V
+          <p className="text-xs text-indigo-800 dark:text-indigo-300 font-mono">
+            Formula: Attention(Q, K, V) = Softmax( (Q · K^T) / √d_k ) · V
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
-            <div className="p-3 bg-white dark:bg-slate-900 rounded border border-slate-200/80 dark:border-slate-800 space-y-1">
-              <span className="text-[10px] text-slate-400 block font-sans uppercase">Step 1: Given Vectors ($d=2$)</span>
-              <div>Q = [1, 0]</div>
-              <div>K₁ = [1, 0], K₂ = [0, 1]</div>
-              <div>V₁ = [1, 0], V₂ = [0, 1]</div>
+            <div className="p-2.5 bg-white dark:bg-slate-900 rounded border border-indigo-100 dark:border-indigo-900">
+              <span className="text-[10px] text-slate-400 block font-sans">Step 1: Given Vectors (d=2)</span>
+              Q = [1, 0]<br />
+              K₁ = [1, 0], K₂ = [0, 1]<br />
+              V₁ = [1, 0], V₂ = [0, 1]
             </div>
 
-            <div className="p-3 bg-white dark:bg-slate-900 rounded border border-slate-200/80 dark:border-slate-800 space-y-1">
-              <span className="text-[10px] text-slate-400 block font-sans uppercase">Step 2: Dot Products &amp; Scaling</span>
-              <div>Q·K₁ = 1, Q·K₂ = 0</div>
-              <div>Scaled by $\sqrt{2} \approx 1.414$:</div>
-              <div>$s_1 = 0.707, s_2 = 0.000$</div>
+            <div className="p-2.5 bg-white dark:bg-slate-900 rounded border border-indigo-100 dark:border-indigo-900">
+              <span className="text-[10px] text-slate-400 block font-sans">Step 2: Dot Products &amp; Scaling</span>
+              Q·K₁ = 1, Q·K₂ = 0<br />
+              Scaled (√2 ≈ 1.414):<br />
+              s₁ = 1/1.414 = 0.707<br />
+              s₂ = 0/1.414 = 0.000
             </div>
 
-            <div className="p-3 bg-white dark:bg-slate-900 rounded border border-slate-200/80 dark:border-slate-800 space-y-1">
-              <span className="text-[10px] text-slate-400 block font-sans uppercase">Step 3: Softmax &amp; Output</span>
-              <div>$\exp(0.707) \approx 2.028$</div>
-              <div>Weights: [0.67, 0.33]</div>
-              <div className="font-bold text-slate-900 dark:text-white">Output = [0.67, 0.33]</div>
+            <div className="p-2.5 bg-white dark:bg-slate-900 rounded border border-indigo-100 dark:border-indigo-900">
+              <span className="text-[10px] text-slate-400 block font-sans">Step 3: Softmax &amp; Output</span>
+              exp(0.707) ≈ 2.028<br />
+              exp(0.000) = 1.000<br />
+              Weights: [0.67, 0.33]<br />
+              Output = 0.67·V₁ + 0.33·V₂<br />
+              <strong>= [0.67, 0.33]</strong>
             </div>
           </div>
         </div>
 
-        {/* Deployment Constraints Viva Note */}
-        <div className="p-3.5 bg-slate-50 dark:bg-slate-900/60 rounded-lg border border-slate-200/80 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-          <strong>Viva Defense Note (CPU vs GPU Constraints):</strong> Full parameter fine-tuning of BLIP-VQA (385M parameters) was purposefully avoided because target free-tier serverless environments provide strictly CPU execution and limited memory. Fine-tuning on CPU incurs prohibitive latency and memory exhaustion during gradient accumulation. Prompt engineering with frozen inference is the industry-standard architectural pattern for CPU-constrained production deployments.
+        {/* Why fine-tuning was not done on CPU note */}
+        <div className="p-3 bg-slate-50 dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300">
+          <strong>Academic Viva Note (Deployment Constraints):</strong> Full parameter fine-tuning or LoRA adaptation of BLIP-VQA (446M parameters) was purposefully omitted because the target hosting environment (Hugging Face Spaces Free Tier) provides strictly 2 vCPUs and 16 GB RAM without GPU acceleration. Backpropagation on CPU would require prohibitive training hours and exceed the RAM ceiling during gradient accumulation. Prompt engineering with frozen inference is the optimal production pattern for free-tier constraints.
         </div>
       </section>
 
-      {/* Layers III & IV: Stack */}
-      <section className="bg-white dark:bg-[#111827] border border-slate-200/80 dark:border-slate-800 rounded-xl p-6 shadow-xs space-y-4">
-        <div className="flex items-center gap-2.5 border-b border-slate-100 dark:border-slate-800 pb-3">
-          <span className="w-6 h-6 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-mono font-bold flex items-center justify-center text-xs">
-            L3+4
-          </span>
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-900 dark:text-white">
-            Layers III &amp; IV: Multi-Modal Model Stack &amp; Tooling
-          </h2>
+      {/* Layer III & IV: Models & Tools */}
+      <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs space-y-6">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+          <div className="flex items-center gap-2.5">
+            <span className="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 font-bold flex items-center justify-center text-xs">
+              L3+4
+            </span>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Layers III &amp; IV: Model Modalities &amp; Tooling Stack</h2>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-          <div className="p-4 rounded-lg border border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 space-y-1">
-            <span className="font-semibold text-slate-900 dark:text-white block">Salesforce BLIP-VQA</span>
-            <span className="text-[10px] text-slate-400 block font-mono">ViT + Cross-Attention</span>
-            <p className="text-slate-500 dark:text-slate-400">
-              Perception model executing on local CPU with beam sequence confidence scoring.
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 space-y-1.5">
+            <span className="font-bold text-blue-600">Salesforce/blip-vqa-base</span>
+            <span className="text-[10px] text-slate-400 block">ViT + BERT Cross-Attention</span>
+            <p className="text-slate-500">
+              Primary VQA engine running locally under PyTorch CPU inference mode.
             </p>
           </div>
 
-          <div className="p-4 rounded-lg border border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 space-y-1">
-            <span className="font-semibold text-slate-900 dark:text-white block">Google Gemini Flash</span>
-            <span className="text-[10px] text-slate-400 block font-mono">Autoregressive LLM</span>
-            <p className="text-slate-500 dark:text-slate-400">
-              Powers few-shot sentence expansion with strict fidelity constraints against hallucinations.
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 space-y-1.5">
+            <span className="font-bold text-purple-600">Gemini 2.5 Flash</span>
+            <span className="text-[10px] text-slate-400 block">Autoregressive LLM</span>
+            <p className="text-slate-500">
+              Used for U2 single-sentence answer expansion and multimodal comparative VQA.
             </p>
           </div>
 
-          <div className="p-4 rounded-lg border border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 space-y-1">
-            <span className="font-semibold text-slate-900 dark:text-white block">all-MiniLM-L6-v2</span>
-            <span className="text-[10px] text-slate-400 block font-mono">Dense Embeddings</span>
-            <p className="text-slate-500 dark:text-slate-400">
-              Computes 384-dimensional cosine similarity for semantic ground-truth evaluation.
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 space-y-1.5">
+            <span className="font-bold text-emerald-600">all-MiniLM-L6-v2</span>
+            <span className="text-[10px] text-slate-400 block">Sentence-Transformers (BERT)</span>
+            <p className="text-slate-500">
+              Generates 384-dimensional dense embeddings for cosine similarity evaluation.
             </p>
           </div>
 
-          <div className="p-4 rounded-lg border border-slate-200/80 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 space-y-1">
-            <span className="font-semibold text-slate-900 dark:text-white block">Stability AI SD-Turbo</span>
-            <span className="text-[10px] text-slate-400 block font-mono">Adversarial Diffusion</span>
-            <p className="text-slate-500 dark:text-slate-400">
-              Synthesizes adversarial low-contrast and cluttered scenes for failure mode testing.
+          <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 space-y-1.5">
+            <span className="font-bold text-indigo-600">SD-Turbo / Gemini Image</span>
+            <span className="text-[10px] text-slate-400 block">Generative Diffusion</span>
+            <p className="text-slate-500">
+              Generates synthetic adversarial test images for the Test Lab (U4).
             </p>
           </div>
         </div>
