@@ -1,6 +1,4 @@
-# Render Web Service Dependencies (Optimized for 512MB RAM free tier)
---extra-index-url https://download.pytorch.org/whl/cpu
-
+# Render Free Web Service (Ultra-lean build for 512MB RAM environment)
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 python-multipart==0.0.20
@@ -10,6 +8,4 @@ google-genai==1.69.0
 pillow==11.1.0
 huggingface-hub==0.36.2
 httpx==0.28.1
-torch==2.5.1
-transformers==4.48.1
-sentence-transformers==3.4.1
+numpy>=1.24.0

@@ -4,25 +4,37 @@ import math
 import logging
 from typing import Dict, Any, List
 from PIL import Image
-import torch
-from transformers import BlipProcessor, BlipForQuestionAnswering
+
+try:
+    import torch
+    from transformers import BlipProcessor, BlipForQuestionAnswering
+    TORCH_AVAILABLE = True
+except ImportError:
+    torch = None
+    BlipProcessor = None
+    BlipForQuestionAnswering = None
+    TORCH_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
 # Render Free Tier provides 512MB RAM. Local BLIP-VQA requires ~1.35GB RAM.
-# When LOW_MEMORY_MODE is true, VQA safely routes to Gemini Vision to prevent Linux OOM kill (exit 137).
+# When LOW_MEMORY_MODE is true or Torch is not installed, VQA safely routes to Gemini Vision.
 LOW_MEMORY_MODE = os.environ.get("LOW_MEMORY_MODE", "false").lower() in ("true", "1", "yes")
 
 class BlipService:
     def __init__(self, model_id: str = "Salesforce/blip-vqa-base"):
         self.model_id = model_id
-        self.processor: BlipProcessor | None = None
-        self.model: BlipForQuestionAnswering | None = None
-        self.device = torch.device("cpu")
+        self.processor = None
+        self.model = None
+        self.device = torch.device("cpu") if torch is not None else None
         self._is_loaded = False
 
     def load_model(self) -> None:
-        """Loads the BLIP-VQA model and processor once in evaluation mode."""
+        """Loads the BLIP-VQA model and processor once in evaluation mode if environment supports it."""
+        if not TORCH_AVAILABLE:
+            logger.info("Torch/Transformers not installed in this environment; skipping local BLIP loading.")
+            return
+
         if LOW_MEMORY_MODE:
             logger.info("LOW_MEMORY_MODE active: skipping local BLIP loading to conserve memory (<512MB).")
             return
@@ -49,10 +61,10 @@ class BlipService:
         self, image: Image.Image, question: str, top_k: int = 5
     ) -> Dict[str, Any]:
         """Runs VQA on the given PIL image and question string."""
-        if LOW_MEMORY_MODE or not self._is_loaded:
+        if not TORCH_AVAILABLE or LOW_MEMORY_MODE or not self._is_loaded:
             self.load_model()
 
-        # If local model is not loaded (due to LOW_MEMORY_MODE or low RAM), delegate to Gemini
+        # If local model is not loaded (due to low memory or missing torch), delegate to Gemini
         if self.model is None or self.processor is None:
             logger.info("Local BLIP not loaded; delegating inference to Gemini Vision cloud engine...")
             from backend.services.gemini_service import gemini_service

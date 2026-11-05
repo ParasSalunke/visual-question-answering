@@ -45,17 +45,22 @@ class EvalService:
         if self._st_model is None:
             # Ensure USE_TF=0 for compatibility
             os.environ["USE_TF"] = "0"
-            from sentence_transformers import SentenceTransformer
-            self._st_model = SentenceTransformer("all-MiniLM-L6-v2")
+            try:
+                from sentence_transformers import SentenceTransformer
+                self._st_model = SentenceTransformer("all-MiniLM-L6-v2")
+            except (ImportError, Exception) as e:
+                logger.info(f"sentence_transformers not available in this environment: {e}")
+                return None
         return self._st_model
 
     def compute_similarity(self, text_a: str, text_b: str) -> float:
-        """Compute cosine similarity between two texts using all-MiniLM-L6-v2."""
+        """Compute cosine similarity between two texts using all-MiniLM-L6-v2, or fallback to token similarity."""
         try:
             model = self.get_st_model()
-            embeddings = model.encode([text_a, text_b], normalize_embeddings=True)
-            cos_sim = float(np.dot(embeddings[0], embeddings[1]))
-            return max(0.0, min(1.0, cos_sim))
+            if model is not None:
+                embeddings = model.encode([text_a, text_b], normalize_embeddings=True)
+                cos_sim = float(np.dot(embeddings[0], embeddings[1]))
+                return max(0.0, min(1.0, cos_sim))
         except Exception as e:
             logger.warning(f"Embedding similarity failed: {e}")
             # Fallback to token Jaccard similarity
