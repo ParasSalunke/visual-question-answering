@@ -1,0 +1,475 @@
+{
+  "engine": "gemini",
+  "timestamp": 1793863293.7237172,
+  "summary": {
+    "total_pairs": 20,
+    "correct": 11,
+    "overall_accuracy": 55.0,
+    "mean_latency_ms": 2373.3,
+    "calibration": {
+      "mean_correct_confidence": 0.95,
+      "mean_incorrect_confidence": 0.5556,
+      "confidence_gap": 0.3944
+    },
+    "by_category": {
+      "normal": {
+        "total": 8,
+        "correct": 6,
+        "accuracy": 75.0,
+        "mean_latency_ms": 2908.1
+      },
+      "low_light": {
+        "total": 6,
+        "correct": 3,
+        "accuracy": 50.0,
+        "mean_latency_ms": 2170.7
+      },
+      "cluttered": {
+        "total": 6,
+        "correct": 2,
+        "accuracy": 33.33,
+        "mean_latency_ms": 1862.8
+      }
+    }
+  },
+  "pairs": [
+    {
+      "id": "pair_01",
+      "image": "eval/images/normal_01_red_car.jpg",
+      "question": "What color is the car?",
+      "ground_truth": "red",
+      "acceptable_alternates": [
+        "red",
+        "dark red",
+        "crimson"
+      ],
+      "prediction": "red",
+      "confidence": 0.95,
+      "latency_ms": 1692,
+      "category": "normal",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 1.0,
+      "match_type": "exact_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_02",
+      "image": "eval/images/normal_02_three_cups.jpg",
+      "question": "How many cups are on the surface?",
+      "ground_truth": "3",
+      "acceptable_alternates": [
+        "3",
+        "three"
+      ],
+      "prediction": "three mugs",
+      "confidence": 0.95,
+      "latency_ms": 5823,
+      "category": "normal",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 0.9,
+      "match_type": "token_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_03",
+      "image": "eval/images/normal_03_red_apple.jpg",
+      "question": "What fruit is shown in the image?",
+      "ground_truth": "apple",
+      "acceptable_alternates": [
+        "apple",
+        "red apple"
+      ],
+      "prediction": "an apple",
+      "confidence": 0.95,
+      "latency_ms": 3025,
+      "category": "normal",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 1.0,
+      "match_type": "exact_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_04",
+      "image": "eval/images/normal_04_stop_sign.jpg",
+      "question": "What kind of traffic sign is visible?",
+      "ground_truth": "stop sign",
+      "acceptable_alternates": [
+        "stop sign",
+        "stop"
+      ],
+      "prediction": "blank stop sign",
+      "confidence": 0.95,
+      "latency_ms": 3287,
+      "category": "normal",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.7543,
+      "match_type": "mismatch",
+      "failure_reason": "misclassification",
+      "notes": "Edge-case degradation observed."
+    },
+    {
+      "id": "pair_05",
+      "image": "eval/images/normal_05_blue_box.jpg",
+      "question": "What object is resting on the surface?",
+      "ground_truth": "box",
+      "acceptable_alternates": [
+        "box",
+        "blue box",
+        "cube"
+      ],
+      "prediction": "blue square",
+      "confidence": 0.95,
+      "latency_ms": 2412,
+      "category": "normal",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.615,
+      "match_type": "mismatch",
+      "failure_reason": "misclassification",
+      "notes": "Edge-case degradation observed."
+    },
+    {
+      "id": "pair_06",
+      "image": "eval/images/normal_06_lighting.jpg",
+      "question": "Is the scene well-lit?",
+      "ground_truth": "yes",
+      "acceptable_alternates": [
+        "yes",
+        "well lit",
+        "bright"
+      ],
+      "prediction": "yes",
+      "confidence": 0.95,
+      "latency_ms": 2266,
+      "category": "normal",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 1.0,
+      "match_type": "exact_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_07",
+      "image": "eval/images/normal_07_indoors.jpg",
+      "question": "Is this scene indoors or outdoors?",
+      "ground_truth": "indoors",
+      "acceptable_alternates": [
+        "indoors",
+        "indoor",
+        "room"
+      ],
+      "prediction": "indoors",
+      "confidence": 0.95,
+      "latency_ms": 2823,
+      "category": "normal",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 1.0,
+      "match_type": "exact_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_08",
+      "image": "eval/images/normal_08_clear_path.jpg",
+      "question": "Is the area clear of large obstructions?",
+      "ground_truth": "yes",
+      "acceptable_alternates": [
+        "yes",
+        "clear"
+      ],
+      "prediction": "yes",
+      "confidence": 0.95,
+      "latency_ms": 1937,
+      "category": "normal",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 1.0,
+      "match_type": "exact_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_09",
+      "image": "eval/images/lowlight_01_dark_chair.jpg",
+      "question": "What furniture is placed in the dark room?",
+      "ground_truth": "chair",
+      "acceptable_alternates": [
+        "chair",
+        "armchair",
+        "seat"
+      ],
+      "prediction": "not visible",
+      "confidence": 0.4,
+      "latency_ms": 1730,
+      "category": "low_light",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.2159,
+      "match_type": "mismatch",
+      "failure_reason": "too dark",
+      "notes": "Edge-case degradation observed."
+    },
+    {
+      "id": "pair_10",
+      "image": "eval/images/lowlight_02_doorway.jpg",
+      "question": "Is there a doorway or exit visible?",
+      "ground_truth": "yes",
+      "acceptable_alternates": [
+        "yes",
+        "door",
+        "doorway"
+      ],
+      "prediction": "yes",
+      "confidence": 0.95,
+      "latency_ms": 2438,
+      "category": "low_light",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 1.0,
+      "match_type": "exact_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_11",
+      "image": "eval/images/lowlight_03_lighting_check.jpg",
+      "question": "What is the lighting condition of the scene?",
+      "ground_truth": "dark",
+      "acceptable_alternates": [
+        "dark",
+        "dim",
+        "low light",
+        "night"
+      ],
+      "prediction": "dark scene",
+      "confidence": 0.95,
+      "latency_ms": 2146,
+      "category": "low_light",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 0.9,
+      "match_type": "token_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_12",
+      "image": "eval/images/lowlight_04_hazard.jpg",
+      "question": "Is the path ahead safe to walk quickly?",
+      "ground_truth": "no",
+      "acceptable_alternates": [
+        "no",
+        "dark",
+        "unsafe"
+      ],
+      "prediction": "unknown",
+      "confidence": 0.95,
+      "latency_ms": 1897,
+      "category": "low_light",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.3548,
+      "match_type": "mismatch",
+      "failure_reason": "too dark",
+      "notes": "Edge-case degradation observed."
+    },
+    {
+      "id": "pair_13",
+      "image": "eval/images/lowlight_05_color_fail.jpg",
+      "question": "What color is the chair?",
+      "ground_truth": "dark blue",
+      "acceptable_alternates": [
+        "dark blue",
+        "black",
+        "dark",
+        "blue"
+      ],
+      "prediction": "not visible",
+      "confidence": 0.4,
+      "latency_ms": 2190,
+      "category": "low_light",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.3047,
+      "match_type": "mismatch",
+      "failure_reason": "too dark",
+      "notes": "Edge-case degradation observed."
+    },
+    {
+      "id": "pair_14",
+      "image": "eval/images/lowlight_06_visibility.jpg",
+      "question": "Are details clearly distinguishable?",
+      "ground_truth": "no",
+      "acceptable_alternates": [
+        "no",
+        "dim",
+        "hard to see"
+      ],
+      "prediction": "no",
+      "confidence": 0.95,
+      "latency_ms": 2623,
+      "category": "low_light",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 1.0,
+      "match_type": "exact_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_15",
+      "image": "eval/images/cluttered_01_desktop.jpg",
+      "question": "What color is the round mug on the desk?",
+      "ground_truth": "red",
+      "acceptable_alternates": [
+        "red",
+        "pink",
+        "maroon"
+      ],
+      "prediction": "red or yellow",
+      "confidence": 0.95,
+      "latency_ms": 1850,
+      "category": "cluttered",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 0.9,
+      "match_type": "token_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_16",
+      "image": "eval/images/cluttered_02_pen.jpg",
+      "question": "Is there a writing pen on the desk?",
+      "ground_truth": "yes",
+      "acceptable_alternates": [
+        "yes",
+        "pen"
+      ],
+      "prediction": "not visible",
+      "confidence": 0.4,
+      "latency_ms": 1765,
+      "category": "cluttered",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.205,
+      "match_type": "mismatch",
+      "failure_reason": "clutter",
+      "notes": "Edge-case degradation observed."
+    },
+    {
+      "id": "pair_17",
+      "image": "eval/images/cluttered_03_notebook.jpg",
+      "question": "What object is to the left of the round mug?",
+      "ground_truth": "notebook",
+      "acceptable_alternates": [
+        "notebook",
+        "book",
+        "pad"
+      ],
+      "prediction": "blue square",
+      "confidence": 0.95,
+      "latency_ms": 3410,
+      "category": "cluttered",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.3043,
+      "match_type": "mismatch",
+      "failure_reason": "clutter",
+      "notes": "Edge-case degradation observed."
+    },
+    {
+      "id": "pair_18",
+      "image": "eval/images/cluttered_04_count.jpg",
+      "question": "Is the desk clean and organized?",
+      "ground_truth": "no",
+      "acceptable_alternates": [
+        "no",
+        "cluttered",
+        "messy"
+      ],
+      "prediction": "no",
+      "confidence": 0.95,
+      "latency_ms": 3401,
+      "category": "cluttered",
+      "source": "generated",
+      "verdict": true,
+      "auto_verdict": true,
+      "similarity_score": 1.0,
+      "match_type": "exact_match",
+      "failure_reason": "",
+      "notes": "Verified by evaluation pipeline."
+    },
+    {
+      "id": "pair_19",
+      "image": "eval/images/cluttered_05_cables.jpg",
+      "question": "Are there tangled cables visible on the surface?",
+      "ground_truth": "yes",
+      "acceptable_alternates": [
+        "yes",
+        "wires",
+        "cables"
+      ],
+      "prediction": "error",
+      "confidence": 0.0,
+      "latency_ms": 360,
+      "category": "cluttered",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.1699,
+      "match_type": "mismatch",
+      "failure_reason": "clutter",
+      "notes": "Edge-case degradation observed."
+    },
+    {
+      "id": "pair_20",
+      "image": "eval/images/cluttered_06_dominant.jpg",
+      "question": "What kind of setting is this?",
+      "ground_truth": "desk",
+      "acceptable_alternates": [
+        "desk",
+        "office",
+        "table",
+        "workspace"
+      ],
+      "prediction": "error",
+      "confidence": 0.0,
+      "latency_ms": 391,
+      "category": "cluttered",
+      "source": "generated",
+      "verdict": false,
+      "auto_verdict": false,
+      "similarity_score": 0.3034,
+      "match_type": "mismatch",
+      "failure_reason": "clutter",
+      "notes": "Edge-case degradation observed."
+    }
+  ]
+}

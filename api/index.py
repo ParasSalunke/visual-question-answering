@@ -1,9 +1,20 @@
 import os
 import sys
 from pathlib import Path
-from fastapi import FastAPI, Request, Response
+
+CURRENT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = CURRENT_DIR.parent
+
+# Ensure both api/ and project root are in sys.path
+for p in [str(CURRENT_DIR), str(ROOT_DIR)]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
+os.environ["USE_TF"] = "0"
+os.environ["LOW_MEMORY_MODE"] = "true"
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import httpx
 
 # Top-level FastAPI instance strictly required by Vercel static AST analyzer
 app = FastAPI(
@@ -20,47 +31,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Vercel Service Binding: injects the internal URL of the target 'app' service
-BACKEND_SERVICE_URL = os.environ.get("BACKEND_SERVICE_URL")
-
-if BACKEND_SERVICE_URL:
-    # Multi-Service Mode: proxy requests to internal 'app' service
-    @app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "PATCH"])
-    async def proxy_to_internal_backend(request: Request, path: str):
-        target_url = f"{BACKEND_SERVICE_URL.rstrip('/')}/api/{path}"
-        async with httpx.AsyncClient(timeout=120.0) as client:
-            req_body = await request.body()
-            headers = dict(request.headers)
-            headers.pop("host", None)
-            headers.pop("content-length", None)
-
-            resp = await client.request(
-                method=request.method,
-                url=target_url,
-                params=request.query_params,
-                content=req_body,
-                headers=headers,
-            )
-
-            excluded_headers = {"content-encoding", "content-length", "transfer-encoding", "connection"}
-            resp_headers = {
-                k: v for k, v in resp.headers.items() if k.lower() not in excluded_headers
-            }
-
-            return Response(
-                content=resp.content,
-                status_code=resp.status_code,
-                headers=resp_headers,
-                media_type=resp.headers.get("content-type"),
-            )
-else:
-    # Standalone mode: mount core backend router directly onto top-level app
-    ROOT_DIR = Path(__file__).resolve().parent.parent
-    if str(ROOT_DIR) not in sys.path:
-        sys.path.insert(0, str(ROOT_DIR))
-
-    os.environ["USE_TF"] = "0"
-    os.environ["LOW_MEMORY_MODE"] = "true"
-
+# Import backend application
+try:
     from backend.main import app as backend_app
+    # Mount backend router directly onto top-level app
     app.router = backend_app.router
+except Exception as e:
+    import traceback
+    traceback.print_exc()
+    
+    @app.get("/api/health")
+    def health_err():
+        return {"status": "error", "error": str(e)}
