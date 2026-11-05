@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import {
-  FlaskConical,
-  Sparkles,
   AlertTriangle,
   Download,
   BookmarkPlus,
@@ -9,6 +7,7 @@ import {
   Sliders,
   Check,
   Eye,
+  ArrowRight,
 } from 'lucide-react';
 import { apiPresets, apiGenerate } from '../api';
 
@@ -64,7 +63,13 @@ export default function TestLabPage() {
       const res = await apiGenerate(promptText, provider);
       setGeneratedImage(res.image_base64);
       setGenDetails(res);
-      setEvalCategory(presetKey.includes('low_light') ? 'low_light' : presetKey.includes('cluttered') ? 'cluttered' : 'normal');
+      setEvalCategory(
+        presetKey.includes('low_light')
+          ? 'low_light'
+          : presetKey.includes('cluttered')
+          ? 'cluttered'
+          : 'normal'
+      );
     } catch (err: any) {
       setError(err.message || 'Image generation failed');
     } finally {
@@ -78,7 +83,6 @@ export default function TestLabPage() {
       alert('Both Question and Ground Truth must be provided.');
       return;
     }
-    // Simulation / local notification of saving to eval
     setSaveSuccess(true);
     setTimeout(() => {
       setShowSaveModal(false);
@@ -89,89 +93,103 @@ export default function TestLabPage() {
   };
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto pb-12">
-      {/* Top Banner */}
-      <div className="bg-gradient-to-r from-purple-700 to-indigo-800 text-white p-6 rounded-2xl shadow-md">
-        <div className="flex items-center gap-3">
-          <FlaskConical className="w-8 h-8 text-purple-300" />
+    <div className="space-y-8 max-w-5xl mx-auto">
+      {/* Editorial Header */}
+      <div className="space-y-2 border-b border-slate-200/80 dark:border-slate-800/80 pb-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Test Image Lab (U4)</h1>
-            <p className="mt-1 text-purple-200 text-sm sm:text-base">
-              Generate adversarial hard-case visual inputs to stress-test vision backbones and uncover failure modes.
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
+              Adversarial Test Lab
+            </h1>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+              Generate synthetic edge-case imagery to evaluate vision backbones under low-light, clutter, and occlusion.
             </p>
+          </div>
+          <div className="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400">
+            <span className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80">
+              Stability SD-Turbo
+            </span>
+            <span className="px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80">
+              512px Resampling
+            </span>
+          </div>
+        </div>
+
+        {/* Human Ground Truth Verification Alert */}
+        <div className="mt-3 p-3.5 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-lg text-amber-800 dark:text-amber-200 flex items-start gap-3 text-xs">
+          <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+          <div className="leading-relaxed">
+            <strong className="font-semibold">Academic Evaluation Protocol:</strong> Synthetic diffusion models may
+            render unexpected artifacts or numeric deviations. Visually inspect generated imagery and manually verify ground-truth facts before adding cases to the evaluation set.
           </div>
         </div>
       </div>
 
-      {/* Mandatory Academic Warning Banner */}
-      <div className="p-4 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-xl text-amber-900 dark:text-amber-200 flex items-start gap-3">
-        <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
-        <div className="text-sm">
-          <p className="font-bold">Crucial Academic Rule (Visual Verification Required):</p>
-          <p className="mt-0.5 text-xs sm:text-sm">
-            Diffusion models (like SD-Turbo) frequently hallucinate or ignore fine-grained numeric counts and tiny objects.
-            You must <strong>visually verify</strong> every generated image before saving to evaluation sets. Never derive ground truth from model prediction!
-          </p>
-        </div>
-      </div>
-
-      {/* Provider Selector */}
-      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+      {/* Provider Selector Controls */}
+      <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-white dark:bg-[#111827] border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs">
         <div className="flex items-center gap-2">
-          <Sliders className="w-4 h-4 text-purple-500" />
-          <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">Image Generation Provider:</span>
+          <Sliders className="w-4 h-4 text-slate-500" />
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+            Generation Engine:
+          </span>
         </div>
-        <div className="flex items-center gap-3 text-xs font-medium">
-          <label className="flex items-center gap-1.5 cursor-pointer">
-            <input
-              type="radio"
-              name="provider"
-              value="hf"
-              checked={provider === 'hf'}
-              onChange={() => setProvider('hf')}
-              className="text-purple-600"
-            />
-            <span>HF sd-turbo (Inference API)</span>
-          </label>
-          <label className="flex items-center gap-1.5 cursor-pointer">
-            <input
-              type="radio"
-              name="provider"
-              value="gemini"
-              checked={provider === 'gemini'}
-              onChange={() => setProvider('gemini')}
-              className="text-purple-600"
-            />
-            <span>Gemini Image (Nano Banana / Imagen)</span>
-          </label>
+        <div className="flex items-center gap-2 text-xs">
+          {[
+            { id: 'hf', label: 'Stability AI SD-Turbo (Inference API)' },
+            { id: 'gemini', label: 'Gemini Vision / Procedural Fallback' },
+          ].map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setProvider(item.id as any)}
+              className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-all cursor-pointer ${
+                provider === item.id
+                  ? 'bg-slate-900 text-white dark:bg-blue-600 border-transparent font-semibold shadow-xs'
+                  : 'border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Presets Grid */}
-      <div>
-        <h2 className="text-lg font-bold text-slate-800 dark:text-slate-200 mb-3">Hard-Case Preset Challenges</h2>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+            Hard-Case Challenge Presets
+          </h2>
+          <span className="text-xs font-mono text-slate-400">6 Adversarial Scenarios</span>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {Object.entries(presets).map(([key, item]) => (
             <div
               key={key}
-              className={`p-4 rounded-xl border flex flex-col justify-between transition-all ${
+              className={`p-4 rounded-xl border flex flex-col justify-between transition-all bg-white dark:bg-[#111827] ${
                 activeKey === key
-                  ? 'border-purple-500 bg-purple-50/20 dark:bg-purple-950/20 shadow-xs'
-                  : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300'
+                  ? 'border-slate-900 dark:border-blue-500 shadow-xs ring-1 ring-slate-900/10 dark:ring-blue-500/20'
+                  : 'border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
               }`}
             >
-              <div>
-                <h3 className="font-bold text-sm text-slate-800 dark:text-slate-100">{item.title}</h3>
-                <p className="text-xs text-slate-500 mt-1">{item.description}</p>
-                <div className="mt-3">
-                  <label className="block text-[11px] font-semibold text-slate-600 dark:text-slate-400 mb-1">
-                    Editable Prompt:
-                  </label>
+              <div className="space-y-2">
+                <div className="flex items-start justify-between">
+                  <h3 className="font-semibold text-sm text-slate-900 dark:text-white">{item.title}</h3>
+                  <span className="text-[10px] font-mono uppercase text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                    {key.replace('_', ' ')}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">
+                  {item.description}
+                </p>
+                <div className="pt-1">
+                  <label className="block text-[11px] font-medium text-slate-400 mb-1">Prompt Specification:</label>
                   <textarea
                     rows={3}
                     value={prompts[key] || item.prompt}
                     onChange={(e) => setPrompts({ ...prompts, [key]: e.target.value })}
-                    className="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200"
+                    className="w-full text-xs p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500 leading-normal"
                   />
                 </div>
               </div>
@@ -180,17 +198,17 @@ export default function TestLabPage() {
                 type="button"
                 disabled={loading}
                 onClick={() => handleGenerate(key)}
-                className="mt-4 w-full py-2 px-3 bg-purple-600 hover:bg-purple-700 disabled:bg-slate-300 dark:disabled:bg-slate-800 text-white text-xs font-semibold rounded-lg shadow-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:cursor-not-allowed"
+                className="mt-4 w-full py-2 px-3 bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 dark:hover:bg-blue-500 disabled:bg-slate-200 dark:disabled:bg-slate-800 text-white text-xs font-medium rounded-lg shadow-xs flex items-center justify-center gap-1.5 cursor-pointer disabled:cursor-not-allowed transition-colors"
               >
                 {loading && activeKey === key ? (
                   <>
                     <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                    <span>Generating...</span>
+                    <span>Synthesizing...</span>
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Generate {item.title.split('/')[0]}</span>
+                    <span>Generate Image</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </>
                 )}
               </button>
@@ -199,55 +217,56 @@ export default function TestLabPage() {
         </div>
       </div>
 
-      {/* Error Banner */}
+      {/* Error Notice */}
       {error && (
-        <div className="p-4 bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900 rounded-xl text-red-700 dark:text-red-300 text-sm">
-          <strong>Generation Error:</strong> {error}
+        <div className="p-4 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded-xl text-red-700 dark:text-red-300 text-xs">
+          <strong>Generation Alert:</strong> {error}
         </div>
       )}
 
       {/* Generated Image Showcase */}
       {generatedImage && (
-        <div className="p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm space-y-4">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div className="p-6 bg-white dark:bg-[#111827] border border-slate-200/80 dark:border-slate-800 rounded-xl shadow-xs space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
             <div>
-              <h3 className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                <Eye className="w-5 h-5 text-purple-600" /> Generated Visual Case
+              <h3 className="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                <Eye className="w-4 h-4 text-blue-600" />
+                <span>Generated Visual Output</span>
               </h3>
               <p className="text-xs text-slate-400 mt-0.5">
-                Provider: <span className="font-mono uppercase font-bold text-purple-600">{genDetails?.provider}</span> |{' '}
-                {genDetails?.width}x{genDetails?.height}px | Latency: {genDetails?.latency_ms}ms
+                Engine: <span className="font-mono uppercase font-semibold text-slate-700 dark:text-slate-300">{genDetails?.provider}</span> •{' '}
+                {genDetails?.width}x{genDetails?.height}px • Latency: {genDetails?.latency_ms} ms
               </p>
             </div>
             <div className="flex items-center gap-2">
               <a
                 href={generatedImage}
                 download="vqa_generated_test.jpg"
-                className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg text-slate-700 dark:text-slate-300 font-medium"
+                className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-md text-slate-700 dark:text-slate-300 font-medium transition-colors"
               >
                 <Download className="w-3.5 h-3.5" /> Download
               </a>
               <button
                 type="button"
                 onClick={() => setShowSaveModal(true)}
-                className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold shadow-xs"
+                className="flex items-center gap-1.5 text-xs px-3 py-1.5 bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 dark:hover:bg-blue-500 text-white rounded-md font-medium shadow-xs transition-colors cursor-pointer"
               >
                 <BookmarkPlus className="w-3.5 h-3.5" /> Save to Eval Set
               </button>
             </div>
           </div>
 
-          <div className="flex justify-center bg-slate-950 p-4 rounded-xl">
+          <div className="flex justify-center bg-slate-950 p-4 rounded-lg">
             <img
               src={generatedImage}
               alt="Generated synthetic test case"
-              className="max-h-96 rounded-lg object-contain shadow-md"
+              className="max-h-96 rounded object-contain shadow-xs"
             />
           </div>
 
           {genDetails?.error_note && (
-            <div className="text-xs text-amber-600 bg-amber-50 dark:bg-amber-950/30 p-2.5 rounded-lg border border-amber-200">
-              Note: Procedural fallback was used because API token was absent or free-tier quota was exceeded.
+            <div className="text-xs text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/30 p-3 rounded-lg border border-amber-200 dark:border-amber-900/50">
+              Note: Procedural geometric fallback was utilized because cloud API token was omitted or free-tier quota was exceeded.
             </div>
           )}
         </div>
@@ -256,92 +275,95 @@ export default function TestLabPage() {
       {/* Save to Eval Set Modal */}
       {showSaveModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-xl space-y-4">
+          <div className="bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-xl p-6 max-w-lg w-full shadow-lg space-y-4">
             <div className="flex justify-between items-center border-b border-slate-100 dark:border-slate-800 pb-3">
-              <h3 className="font-bold text-slate-800 dark:text-slate-100 text-base">Save Image to Evaluation Benchmark</h3>
+              <h3 className="font-semibold text-slate-900 dark:text-white text-sm">
+                Save Image to Benchmark Evaluation Set
+              </h3>
               <button
                 type="button"
                 onClick={() => setShowSaveModal(false)}
-                className="text-slate-400 hover:text-slate-600 text-lg leading-none"
+                className="text-slate-400 hover:text-slate-600 text-lg leading-none cursor-pointer"
               >
                 &times;
               </button>
             </div>
 
             <form onSubmit={handleSaveToEval} className="space-y-3">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Evaluation Question:
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  Target Evaluation Question:
                 </label>
                 <input
                   type="text"
                   required
                   value={evalQuestion}
                   onChange={(e) => setEvalQuestion(e.target.value)}
-                  placeholder="e.g. Is the path ahead clear of obstacles?"
-                  className="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"
+                  placeholder="e.g. Is there a blue notebook on the desk?"
+                  className="w-full text-xs p-2.5 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                  Ground Truth (Typed by Student):
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                  Ground Truth Reference (Human Verified):
                 </label>
                 <input
                   type="text"
                   required
                   value={evalGroundTruth}
                   onChange={(e) => setEvalGroundTruth(e.target.value)}
-                  placeholder="e.g. no"
-                  className="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"
+                  placeholder="e.g. yes"
+                  className="w-full text-xs p-2.5 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
-                <span className="text-[10px] text-slate-400 block mt-0.5">
-                  Academic Rule: Must be visually confirmed by you.
+                <span className="text-[11px] text-slate-400 block">
+                  Mandatory: Must be visually verified by you against the image.
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Category:</label>
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Category:</label>
                   <select
                     value={evalCategory}
                     onChange={(e) => setEvalCategory(e.target.value)}
-                    className="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"
+                    className="w-full text-xs p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white"
                   >
-                    <option value="normal">Normal</option>
-                    <option value="low_light">Low-Light</option>
-                    <option value="cluttered">Cluttered</option>
+                    <option value="normal">Normal Baseline</option>
+                    <option value="low_light">Low-Light Stress</option>
+                    <option value="cluttered">Cluttered Adversarial</option>
                   </select>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Tags:</label>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Taxonomy Tags:</label>
                   <input
                     type="text"
                     value={evalTags}
                     onChange={(e) => setEvalTags(e.target.value)}
-                    className="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"
+                    className="w-full text-xs p-2 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white"
                   />
                 </div>
               </div>
 
-              <div className="pt-2 flex justify-end gap-2">
+              <div className="pt-3 flex justify-end gap-2 border-t border-slate-100 dark:border-slate-800">
                 <button
                   type="button"
                   onClick={() => setShowSaveModal(false)}
-                  className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                  className="px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 text-xs bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-lg flex items-center gap-1"
+                  className="px-4 py-1.5 text-xs bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 dark:hover:bg-blue-500 text-white font-medium rounded-md flex items-center gap-1.5 cursor-pointer shadow-xs"
                 >
                   {saveSuccess ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-green-300" /> Saved!
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Saved to Benchmark</span>
                     </>
                   ) : (
-                    'Confirm Save'
+                    <span>Confirm &amp; Save</span>
                   )}
                 </button>
               </div>
