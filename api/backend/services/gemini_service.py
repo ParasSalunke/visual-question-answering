@@ -128,6 +128,18 @@ class GeminiService:
                 "error": str(e)
             }
 
+    def answer_vqa(self, image: Any, question: str) -> Dict[str, Any]:
+        """Convenience helper accepting PIL Image or bytes."""
+        if hasattr(image, "convert"):
+            import io
+            buf = io.BytesIO()
+            img = image.convert("RGB") if image.mode != "RGB" else image
+            img.save(buf, format="JPEG")
+            return self.answer_visual_question(buf.getvalue(), "image/jpeg", question)
+        elif isinstance(image, bytes):
+            return self.answer_visual_question(image, "image/jpeg", question)
+        return {"short_answer": "error", "confidence": 0.0, "latency_ms": 0, "engine": "gemini", "error": "Invalid image format"}
+
     def expand_answer(
         self, question: str, short_answer: str, technique: str = "few_shot"
     ) -> Dict[str, Any]:

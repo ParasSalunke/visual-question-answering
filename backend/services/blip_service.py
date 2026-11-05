@@ -1,5 +1,6 @@
 from __future__ import annotations
 import os
+import io
 import time
 import math
 import logging
@@ -69,14 +70,20 @@ class BlipService:
         if self.model is None or self.processor is None:
             logger.info("Local BLIP not loaded; delegating inference to Gemini Vision cloud engine...")
             from backend.services.gemini_service import gemini_service
-            gemini_res = gemini_service.answer_vqa(image, question)
+            buf = io.BytesIO()
+            img = image.convert("RGB") if image.mode != "RGB" else image
+            img.save(buf, format="JPEG")
+            img_bytes = buf.getvalue()
+            gemini_res = gemini_service.answer_visual_question(img_bytes, "image/jpeg", question)
+            short_ans = gemini_res.get("short_answer", "")
+            conf = float(gemini_res.get("confidence", 0.0))
             return {
-                "short_answer": gemini_res["short_answer"],
-                "confidence": gemini_res["confidence"],
-                "top_k": gemini_res.get("top_candidates", [
-                    {"answer": gemini_res["short_answer"], "probability": gemini_res["confidence"]}
+                "short_answer": short_ans,
+                "confidence": conf,
+                "top_k": gemini_res.get("top_k", [
+                    {"answer": short_ans, "probability": conf}
                 ]),
-                "latency_ms": gemini_res["latency_ms"],
+                "latency_ms": gemini_res.get("latency_ms", 0),
                 "engine": "blip (cloud-mode)",
             }
 
