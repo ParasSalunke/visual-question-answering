@@ -1,5 +1,7 @@
 import os
-from fastapi import FastAPI
+import sys
+from pathlib import Path
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
 os.environ["USE_TF"] = "0"
@@ -20,7 +22,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.middleware("http")
+async def ensure_api_prefix(request: Request, call_next):
+    path = request.scope.get("path", "")
+    if path and not path.startswith("/api"):
+        request.scope["path"] = "/api" + path
+    return await call_next(request)
+
 from backend.main import app as backend_app
 
-# Mount backend router directly onto top-level app
-app.router = backend_app.router
+app.include_router(backend_app.router)
