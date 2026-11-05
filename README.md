@@ -1,4 +1,8 @@
+<div align="center">
+
 # Visual Question Answering (VQA) Studio
+
+</div>
 
 <div align="center">
 
@@ -28,8 +32,11 @@
 
 ## 📋 Table of Contents
 
+- [Student & Academic Project Metadata](#-student--academic-project-metadata)
 - [Executive Overview](#-executive-overview)
 - [System Architecture](#-system-architecture)
+  - [High-Level Architecture Pipeline](#high-level-architecture-pipeline)
+  - [Multimodal Request-Response Lifecycle](#multimodal-request-response-lifecycle)
 - [Core Features & Course Units](#-core-features--course-units)
   - [Unit 1: Guided Question Templates](#unit-1-guided-question-templates-u1)
   - [Unit 2: LLM Sentence Expansion & Prompt Comparison](#unit-2-llm-sentence-expansion--prompt-comparison-u2)
@@ -51,6 +58,22 @@
 
 ---
 
+## 🎓 Student & Academic Project Metadata
+
+| Academic Field | Student & Project Specification |
+| :--- | :--- |
+| **Student Name** | **Paras Nitin Salunke** |
+| **Enrollment Number** | `ADT23SOCB0692` |
+| **Roll Number** | `34` |
+| **Subject** | **Generative AI (GEN AI)** |
+| **Problem Statement** | **P34: Visual Question Answering (VQA)** |
+| **Academic Component** | Individual University Course Project (50 Marks) |
+| **Live Production Application** | [visual-question-answering-rho.vercel.app](https://visual-question-answering-rho.vercel.app/) |
+| **Interactive API Documentation** | [visual-question-answering-rho.vercel.app/docs](https://visual-question-answering-rho.vercel.app/docs) |
+| **GitHub Repository** | [github.com/ParasSalunke/visual-question-answering](https://github.com/ParasSalunke/visual-question-answering) |
+
+---
+
 ## 🎯 Executive Overview
 
 **VQA Studio** was engineered as an individual university Generative AI course project (50 Marks). The system addresses a fundamental limitation in classical Vision-Language Models (VLMs): while models such as Salesforce BLIP produce accurate short visual answers (e.g., *"red"*, *"3"*, *"yes"*), real-world conversational interfaces and assistive technologies require fluent, grammatically complete, and contextual English sentences.
@@ -64,48 +87,103 @@ To solve this, VQA Studio implements a **dual-stage multimodal pipeline**:
 
 ## 🏛️ System Architecture
 
-The following diagram illustrates the complete end-to-end data flow and decoupled service architecture:
+### High-Level Architecture Pipeline
 
+The following Mermaid flowchart illustrates the tiered decoupled services, guardrails, and data processing flow:
+
+```mermaid
+flowchart TD
+    subgraph ClientTier["1. Frontend Client Tier (React 19 + TypeScript + Vite)"]
+        UI["Web SPA: /ask, /testlab, /evaluation, /learn, /responsible-ai"]
+        Tmpl["U1: Question Templates (26 Templates & Dynamic Placeholders)"]
+        TTS["U3: Web Speech API Read Aloud & ARIA-Live Accessibility"]
+    end
+
+    subgraph APITier["2. API Gateway & Routing Tier (FastAPI)"]
+        Gateway["FastAPI Gateway (/api/index.py on Vercel Serverless / Uvicorn)"]
+        RAM["In-Memory RAM Stream (io.BytesIO, Zero Disk Retention, <5MB)"]
+        Prefix["Dual-Prefix Middleware (/api/* and root path routing)"]
+    end
+
+    subgraph VisionTier["3. Perceptual Vision Inference Tier (U3)"]
+        BLIP["Salesforce BLIP-VQA Base (385M, PyTorch CPU, Beam Search)"]
+        GeminiVis["Google Gemini 3.5 Flash Vision (Cloud Multimodal API)"]
+        TopK["Top-k Candidate Answers & Softmax Confidence Scores"]
+    end
+
+    subgraph ExpansionTier["4. LLM Sentence Expansion Tier (U2)"]
+        GeminiLLM["Google Gemini Flash LLM"]
+        ZeroShot["Zero-Shot Prompting (Direct Strict Instruction)"]
+        FewShot["Few-Shot Prompting (5+ Exemplar In-Context Pairs)"]
+        Fidelity["Fidelity-Gating Filter (Hallucination Rejection)"]
+        Fallback["Syntactic Regex Fallback Builder (Offline Guarantee)"]
+    end
+
+    subgraph EvalTier["5. Benchmark Evaluation & Hard-Case Lab (U4 & U5)"]
+        Pairs["20 Ground-Truth Pairs (Normal, Low-Light, Cluttered)"]
+        DualVerdict["Dual-Verdict Matcher: Text Normalization + MiniLM Cosine Sim >= 0.80"]
+        Calibration["Confidence Calibration Gap Metric"]
+        HardCases["Test Image Lab (6 Hard Presets + SD-Turbo Generator)"]
+    end
+
+    subgraph SafetyTier["6. Responsible AI Guardrails (Layer V)"]
+        Unans["10 Unanswerable Visual Questions (Hallucination Benchmark)"]
+        PII["PII & Facial Recognition Refusal Filters"]
+        LowConf["Low-Confidence Alert Banner (< 0.45)"]
+        RateLimit["Sliding-Window Rate Limiter (60 req/min)"]
+    end
+
+    UI --> Gateway
+    Tmpl --> UI
+    Gateway --> RAM
+    RAM --> Prefix
+    Prefix --> VisionTier
+    Prefix --> ExpansionTier
+    Prefix --> EvalTier
+    Prefix --> SafetyTier
+
+    VisionTier --> TopK
+    TopK --> ExpansionTier
+    ExpansionTier --> GeminiLLM
+    GeminiLLM --> ZeroShot
+    GeminiLLM --> FewShot
+    ZeroShot --> Fidelity
+    FewShot --> Fidelity
+    Fidelity -.->|Quota / Network Fallback| Fallback
+    Fallback --> UI
+    Fidelity --> UI
+    TTS --> UI
 ```
-+----------------------------------------------------------------------------------------------------+
-|                                      FRONTEND CLIENT TIER                                          |
-|  • React 19 SPA (Vite + TypeScript + Tailwind CSS v4)                                              |
-|  • Hash Router navigation: /ask, /testlab, /evaluation, /learn, /responsible-ai                    |
-|  • Dynamic Template Interpolation  • SpeechSynthesis ("Read Aloud")  • ARIA Live Announcements     |
-+-------------------------------------------------+--------------------------------------------------+
-                                                  | JSON / Multipart Form-Data
-                                                  v
-+----------------------------------------------------------------------------------------------------+
-|                                    API GATEWAY & ROUTING TIER                                      |
-|  • FastAPI (Python 3.10 / 3.11) on Uvicorn (Local) or Vercel Serverless Function (/api/index.py)  |
-|  • In-Memory Processing (io.BytesIO)  • Content-Type / File-Size Guardrails (<5MB)                 |
-|  • Dual-Prefix Middleware: transparently routes both /api/* and root paths                         |
-+-------------------+-----------------------------+------------------------------+-------------------+
-                    |                             |                              |
-                    v                             v                              v
-+----------------------------------+ +--------------------------+ +----------------------------------+
-|      VISION INFERENCE TIER       | |   LLM EXPANSION TIER     | |   BENCHMARK EVALUATION TIER      |
-|                                  | |                          | |                                  |
-| [Engine 1: Salesforce BLIP-VQA]  | | [Google Gemini Flash]    | | [Ground Truth Benchmark]         |
-| • Model: blip-vqa-base (385M)    | | • Zero-Shot Expansion    | | • 20 Core Pairs (Normal, Dark,   |
-| • Local PyTorch CPU Inference    | | • Few-Shot (5+ Examples) | |   Cluttered)                     |
-| • Beam Search + Seq Scores       | | • Fidelity Gating        | |                                  |
-| • Softmax Normalized Top-K       | | • Syntactic Regex Fallback| | [Dual-Verdict Matching Engine]   |
-|                                  | +--------------------------+ | • Regex Text Normalization       |
-| [Engine 2: Gemini 3.5 Vision]    |                              | • all-MiniLM-L6-v2 Cosine Sim    |
-| • Cloud Multimodal Vision        |                              |   (Threshold >= 0.80)            |
-| • Low-Memory Cloud Delegation    |                              | • Confidence Calibration Gap     |
-+----------------------------------+                              +----------------------------------+
-                    |                                                            |
-                    v                                                            v
-+----------------------------------------------------------------------------------------------------+
-|                                RESPONSIBLE AI & ETHICAL GUARDRAILS                                 |
-|  • Ephemeral RAM-Only Image Processing: Zero disk retention, images strictly handled in-memory     |
-|  • 10-Question Unanswerable Benchmark: Measured hallucination rate on non-visible visual queries   |
-|  • PII & Facial Recognition Refusal: Blocks privacy-sensitive identification requests             |
-|  • Low-Confidence Warning Banner: Automatic UI warning when confidence falls below 0.45           |
-|  • In-Memory Sliding-Window Rate Limiting: 60 requests/minute per client IP                        |
-+----------------------------------------------------------------------------------------------------+
+
+### Multimodal Request-Response Lifecycle
+
+The sequence diagram below highlights the synchronous flow across vision perception, guardrails, LLM expansion, and client rendering:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as User / Evaluator
+    participant UI as Frontend SPA (React 19)
+    participant API as FastAPI Gateway
+    participant Guard as Safety & RAM Guardrails
+    participant Vision as Vision Engine (BLIP / Gemini)
+    participant LLM as Expansion LLM (Gemini Flash)
+    participant Eval as MiniLM / Evaluation Engine
+
+    User->>UI: Selects template or enters question & uploads image
+    UI->>API: POST /api/vqa (image in RAM, question, engine)
+    API->>Guard: Validate image bytes (<5MB, valid MIME, no PII)
+    Guard-->>API: Validated (in-memory buffer)
+    API->>Vision: Run inference (BLIP-VQA CPU or Gemini Vision)
+    Vision-->>API: Terse answer (e.g. "stop sign", confidence 0.95, top-k)
+    API-->>UI: Return short answer, latency_ms & confidence
+    
+    UI->>API: POST /api/expand (question, short_answer, technique="both")
+    API->>LLM: Generate Zero-Shot & Few-Shot sentence expansions
+    LLM-->>API: Grammatical sentence ("The visible traffic sign is a stop sign.")
+    API-->>UI: Return expanded sentences & prompt metrics
+    
+    UI-->>User: Display interactive 3-step results, audio TTS playback & confidence badge
 ```
 
 ---
